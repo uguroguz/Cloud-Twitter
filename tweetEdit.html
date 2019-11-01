@@ -1,0 +1,80 @@
+
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <p>bg image repeat</p>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-md-12">
+                    <p>{{myuser.name}}</p>
+                    <p>@{{myuser.username}}</p>
+                <ul class="list-group side">
+                    <li class="list-group-item list-group-item-action">
+                        <a href="/profile"><span>Tweets</span><br><span>68</span></a>
+                    </li>
+                    <li>
+                        <a href="/list" class="list-group-item list-group-item-action"><span>Following</span><br><span>68</span></a>
+                    </li>
+                    <li class="list-group-item list-group-item-action">
+                        <a href="/list"><span>Followers</span><br><span>68</span></a>
+                    </li>
+                </ul>
+                
+                <p>tweets & follower number</p>
+            </div>
+        </div>
+        {% if myuser.description %}
+        <div class="row">
+            <div class="col-md-12">
+                <p>{{ myuser.description }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" action="/update">
+                    <div class="form-group">
+                        <label for="description">Introduce your self</label>
+                        <textarea class="form-control" id="description" name="content" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-info" type="submit" Value="description" name="button">Save</button>
+                </form>                
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <p>Edit Tweet</p>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form method="POST" action="/edit/{{tweet_ind}}">
+                    <div class="form-group">
+                        <label for="tweet">Tweet {{tweet_ind}}</label>
+                        <textarea class="form-control" id="tweet" placeholder="{{tweet.text}}" name="tweet_text" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Add Image</label>
+                        <input type="file" class="form-control-file" id="image">
+                    </div>
+                    <button class="btn btn-primary" type="submit" name="tweet">Update</button>
+                </form>
+            </div>
+        </div>
+        <hr>
+        
+    </div>
+</div>
+
+
+
+{% endblock %}

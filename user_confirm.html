@@ -1,0 +1,36 @@
+
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="container">
+    {% if message != "" %}
+    <div class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+    {% endif %}
+    
+    {% if user %}
+    <h3>{{ welcome }} {{ user.email() }} welcome to the application</h3>
+    <p>Note: changing email wont effect login part because user is coming from google.api while below change is made projects db  </p>
+    <p>Below you will find your details as currently entered into the system</p>
+    <p>To update your information <a href='/update'>click here</a></p>
+    {% else %}
+    <p>Hello guest welcome to the application</p>
+    {% endif %}
+    <p>you can {{ url_string }} <a href='{{ url }}'>here</a></p>
+
+
+    <form class="form-inline" method="POST" action="/validation">
+        <div class="form-group row">
+            <label for="UserName" class="col-md-2 col-form-label">username</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" name="username" id="UserName" >
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <p>bg image repeat</p>
+            </div>
+        </div>       
+            
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-md-12">
+            <nav class="navbar navbar-light navbar-expand-md bg-light">
+                <a class="navbar-brand" href="#">Assignment1</a>
+                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                    <ul class="navbar-nav mr-auto">
+                        {% if cnt_tweets > 0 %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/">Tweets<br><span>{{cnt_tweets}}</span></a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Profile">PHOTOS/VIDEOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/list">FOLLOWING</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/list">FOLLOWERS</a>
+                        </li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a class="nav-link btn btn-outline-secondary" href="/edit">Edit Profile</a>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </nav>
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <form method="POST" action="/update">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" id="name" name="name" placeholder= '{{ myuser.name }}'></input>
+            </div>
+            <div class="form-group">
+                <label for="description">Introduce your self</label>
+                <textarea class="form-control" id="description" name="content" placeholder="{{ myuser.description }}" rows="3"></textarea>
+            </div>
+                
+            <button class="btn btn-success" type="submit" Value="Update" name="button">Update</button>
+    
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

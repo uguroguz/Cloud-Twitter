@@ -1,0 +1,112 @@
+
+{% extends "layout.html" %}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <br>
+            <div class="row card">
+                <div class="col-md-12">
+                    <table class="table table-borderless">
+                        <tr><td colspan="3">
+                            <p class="text-center">{{myuser.name}}</p>
+                            <p class="text-center">@{{myuser.username}}</p>
+                        </td></tr>
+                        <tr>
+                            <td class="text-center"><a href="/profile"><span>Tweets</span><br><span>{{cnt_tweets}}</span></a></td>
+                            <td class="text-center">
+                                <a href="/following"><span>Following</span><br><span>{{followed}}</span></a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/follower"><span>Followers</span><br><span>{{follower}}</span></a>
+                            </td>
+                        </tr>                    
+                    </table>
+                </div>
+            </div>
+            <br>
+            
+            {% if myuser.description %}
+            <div class="row card">
+                <div class="col-md-12">
+                    <p>{{ myuser.description }}</p>
+                </div>
+            </div>
+            {% else %}
+            <div class="row card">
+                <div class="col-md-12">
+                    <form method="POST" action="/update">
+                        <div class="form-group">
+                            <label for="description"><b>Introduce your self</b></label>
+                            <label><small>Describe who you are and what you're into.</small></label>
+                            <textarea class="form-control" id="description" name="content" rows="3"></textarea>
+                        </div>
+                        <button class="btn btn-info" type="submit" Value="description" name="button">Save</button>
+                    </form>                
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card alert alert-primary">
+                        <form method="POST" action="{{upload_url}}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <textarea class="form-control" id="tweet" placeholder="Whats Happening?" name="tweet_text" rows="3"></textarea>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3 offset-md-6">
+                                    <label class="custom-file-label" for="image"><span class="glyphicon glyphicon-picture"></span></label>
+                                    <input type="file" class="custom-file-input" accept="image/gif,image/jpeg,image/jpg,image/png" name="image" id="image">                                    
+                                    </div>
+                                <div class="col-md-3">   
+                                    <button class="btn btn-primary" type="submit" name="tweet">Tweet</button>
+                                </div>                                
+                            </div>
+                            
+                        </form>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% for i in range(cnt) %}
+                    <div class="card">
+                        <div class="card-header">                            
+                            <form method="POST" action="/profile">
+                                <p><button class="btn btn-link" type="submit" name="button" value="{{tweets[i].username}}">@{{tweets[i].username}}</button> <small>{{tweets[i].timestamp}}</small></p>
+                            </form>                            
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ tweets[i].text }}</p>
+                            {% if not images[i] == None %}
+                            <img src="{{images[i]}}" class="img-thumbnail" />
+                            {% endif %}
+                            <br>
+                            {% if not visiting %}
+                            <div class="row align-items-end">
+                                <div class="offset-md-8">
+                                    <a class="btn btn-warning" role="button" href="/edit/{{tweets[i].timestamp}}">Edit</a> 
+                                </div>
+                                <div class="col">
+                                    <form method="POST" action="/tweet/delete">
+                                        <button class="btn btn-danger" type="submit" name="timestamp" value="{{tweets[i].timestamp}}">Delete</button>
+                                    </form>  
+                                </div>
+                            </div>
+                                                                                 
+                            {% endif %}                        
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
